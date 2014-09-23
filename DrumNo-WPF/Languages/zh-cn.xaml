@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+    <s:String x:Key="DrumNo">加桶号:</s:String>
+    <s:String x:Key="SelectFile">选择文件:</s:String>
+    <s:String x:Key="PackageNO">包装号:</s:String>
+    <s:String x:Key="Browse">浏览...</s:String>
+    <s:String x:Key="From">从</s:String>
+    <s:String x:Key="To">到</s:String>
+    <s:String x:Key="PkgCategory">包装类型:</s:String>
+    <s:String x:Key="Tong">桶</s:String>
+    <s:String x:Key="Box">箱</s:String>
+    <s:String x:Key="Copies">份数:</s:String>
+    <s:String x:Key="Mark">标志</s:String>
+    <s:String x:Key="3CMark">3C标志</s:String>
+    <s:String x:Key="RohsMark">Rohs标志</s:String>
+    <s:String x:Key="QSMark">QS标志</s:String>
+    <s:String x:Key="CustomMark">自定义标志</s:String>
+    <s:String x:Key="CustomMarkSettings">自定义标志设置(仅对A4标签有效)</s:String>
+    <s:String x:Key="AsixX">X轴:</s:String>
+    <s:String x:Key="AsixY">Y轴:</s:String>
+    <s:String x:Key="Zoom">缩放:</s:String>
+    <s:String x:Key="Rotate">旋转:</s:String>
+    <s:String x:Key="A4Label">A4标签</s:String>
+    <s:String x:Key="HalfA4Label">1/2 A4标签</s:String>
+    <s:String x:Key="QuarterA4Label">1/4 A4标签</s:String>
+    <s:String x:Key="NonNumberic">请输入数字!</s:String>
+    <s:String x:Key="NumRegionError">请输入正确的桶号范围</s:String>
+    <s:String x:Key="Reset">重置</s:String>
+    <s:String x:Key="Complete">完   成</s:String>
+    <s:String x:Key="PageNOnull">页码不能为空！</s:String>
+    <s:String x:Key="Number">号</s:String>
+</ResourceDictionary>

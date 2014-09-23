@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://stjnapp03/batchmgr/verify/lpi.asmx?wsdl" docRef="http://stjnapp03/batchmgr/verify/lpi.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://stjnapp03/batchmgr/verify/lpi.asmx" xmlns:q1="TJITCV" binding="q1:lpiSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://stjnapp03/batchmgr/verify/lpi.asmx" xmlns:q2="TJITCV" binding="q2:lpiSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

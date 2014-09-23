@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="http://stjnapp03/batchmgr/verify/lpi.asmx?disco" filename="lpi.disco" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://stjnapp03/batchmgr/verify/lpi.asmx?wsdl" filename="lpi.wsdl" />
+  </Results>
+</DiscoveryClientResultsFile>

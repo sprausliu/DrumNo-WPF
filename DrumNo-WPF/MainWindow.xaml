@@ -1,0 +1,89 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="DrumNo_WPF.MainWindow"
+        Title="{DynamicResource DrumNo}" Height="400" Width="667" ResizeMode="NoResize">
+    <Window.Resources>
+        <System:Double x:Key="A4OriginX">282</System:Double>
+        <System:Double x:Key="A4OriginY">434</System:Double>
+        <System:Double x:Key="A4OriginZoom">70</System:Double>
+        <System:Double x:Key="A4OriginRotate">0</System:Double>
+        <System:Int16 x:Key="A4MaxX">449</System:Int16>
+        <System:Int16 x:Key="A4MinY">270</System:Int16>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="filesource" Margin="115,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" HorizontalAlignment="Left" Width="414" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="35,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="14" Height="18" FontWeight="Bold" Text="{DynamicResource SelectFile}"/>
+        <Button Content="{DynamicResource Browse}" HorizontalAlignment="Left" Margin="545,11,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" Height="22"/>
+        <GroupBox x:Name="CLSettings" Header="{DynamicResource CustomMarkSettings}" HorizontalAlignment="Left" Margin="30,178,0,0" VerticalAlignment="Top" Height="74" Width="601" IsEnabled="{Binding IsChecked, ElementName=CustomMark}" FontWeight="Bold">
+            <Grid HorizontalAlignment="Left" Height="53" VerticalAlignment="Top" Width="590" Margin="0,4,-1,-5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="108*"/>
+                    <ColumnDefinition Width="188*"/>
+                    <ColumnDefinition Width="295*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="28*"/>
+                    <RowDefinition Height="0*"/>
+                </Grid.RowDefinitions>
+                <Label HorizontalAlignment="Left"  VerticalAlignment="Top" Width="35" Content="{DynamicResource AsixX}" Margin="0,-3,0,0" FontWeight="Normal" >
+                </Label>
+                <TextBox x:Name="AsixX" HorizontalAlignment="Left" Margin="35,1,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36" Height="22" Text="{Binding Value, ElementName=A4OriginXSlider}" FontWeight="Normal"/>
+                <Slider x:Name="A4OriginXSlider" HorizontalAlignment="Left" Margin="86,1,0,0" VerticalAlignment="Top" Height="22" Width="190" IsSnapToTickEnabled="True" Maximum="800" SmallChange="1" Grid.ColumnSpan="2" Value="{DynamicResource A4OriginX}"/>
+                <Label HorizontalAlignment="Left" Margin="0,22,0,0"  VerticalAlignment="Top" Width="35" Content="{DynamicResource AsixY}" Grid.RowSpan="2" FontWeight="Normal"/>
+                <TextBox x:Name="AsixY" HorizontalAlignment="Left" Margin="35,1,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36" Height="22" Text="{Binding Value, ElementName=A4OriginYSliders}" Grid.Row="1" FontWeight="Normal"/>
+                <Slider x:Name="A4OriginYSliders" HorizontalAlignment="Left" Margin="86,1,0,0" VerticalAlignment="Top" Height="22" Width="190" IsSnapToTickEnabled="True" Maximum="800" SmallChange="1" Grid.Row="1" Grid.ColumnSpan="2" Value="{DynamicResource A4OriginY}"/>
+                <Label HorizontalAlignment="Left" Margin="0,-3,0,0" VerticalAlignment="Top" Width="40" Grid.Column="2" Content="{DynamicResource Zoom}" FontWeight="Normal"/>
+                <TextBox x:Name="Zoom" HorizontalAlignment="Left" Margin="45,1,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36" Height="22" Text="{Binding Value, ElementName=ZoomSlider}" Grid.Column="2" FontWeight="Normal"/>
+                <Slider x:Name="ZoomSlider" HorizontalAlignment="Left" Margin="88,1,0,0" VerticalAlignment="Top" Height="22" Width="197" IsSnapToTickEnabled="True" Maximum="800" SmallChange="1" Grid.Column="2" Value="{DynamicResource A4OriginZoom}"/>
+                <Label HorizontalAlignment="Left" Margin="0,22,0,0" VerticalAlignment="Top" Grid.Column="2" Width="41" Content="{DynamicResource Rotate}" Grid.RowSpan="2" FontWeight="Normal"/>
+                <TextBox x:Name="Rotate" HorizontalAlignment="Left" Margin="45,1,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36" Height="22" Text="{Binding Value, ElementName=rotateslider}" Grid.Row="1" Grid.Column="2" FontWeight="Normal"/>
+                <Slider x:Name="rotateslider" HorizontalAlignment="Left" Margin="88,1,0,0" VerticalAlignment="Top" Height="22" Width="197" IsSnapToTickEnabled="True" Maximum="180" SmallChange="1" Grid.Column="2" Grid.Row="1" Minimum="-180" Value="{DynamicResource A4OriginRotate}"/>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="A4Label" Content="{DynamicResource A4Label}" HorizontalAlignment="Left" Margin="35,268,0,0" VerticalAlignment="Top" Width="138" Height="47" Click="A4Label_Click"/>
+        <Button x:Name="HalfA4Label" HorizontalAlignment="Left" Margin="261,268,0,0" VerticalAlignment="Top" Width="138" Height="47" Content="{DynamicResource HalfA4Label}" Click="HalfA4Label_Click"/>
+        <Button x:Name="QuarterA4Label" Content="{DynamicResource QuarterA4Label}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="138" Height="47" Margin="482,268,0,0" Click="QuarterA4Label_Click"/>
+        <Label x:Name="Result" Content="" Margin="35,320,0,0" VerticalAlignment="Top" Height="37" Width="585" FontSize="16" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+        <GroupBox Header="包装号:" HorizontalAlignment="Left" Margin="30,125,0,0" VerticalAlignment="Top" Height="48" Width="601" FontWeight="Bold" IsEnabled="{Binding IsChecked, ElementName=drumno}">
+            <Grid HorizontalAlignment="Left" Height="24" Margin="0,0,-2,-3" VerticalAlignment="Top" Width="578">
+                <TextBox x:Name="NOFrom" HorizontalAlignment="Left" Margin="27,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="87" Height="22" PreviewKeyDown="NO_PreviewKeyDown" PreviewTextInput="NO_PreviewTextInput"  DataObject.Pasting="NO_Pasting" Text="1" LostFocus="NO_LostFocus" FontWeight="Normal"/>
+                <TextBox x:Name="NOTo" HorizontalAlignment="Left" Margin="141,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="87" Height="22" PreviewKeyDown="NO_PreviewKeyDown" PreviewTextInput="NO_PreviewTextInput" DataObject.Pasting="NO_Pasting" Text="1" LostFocus="NO_LostFocus" FontWeight="Normal"/>
+                <TextBox x:Name="Copies" HorizontalAlignment="Left" Margin="422,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66" Height="22" PreviewKeyDown="NO_PreviewKeyDown" PreviewTextInput="NO_PreviewTextInput" DataObject.Pasting="NO_Pasting" Text="1" LostFocus="NO_LostFocus" FontWeight="Normal"/>
+                <RadioButton x:Name="PkgCate_Tong" Content="{DynamicResource Tong}" HorizontalAlignment="Left" Margin="296,5,0,0" VerticalAlignment="Top" Height="14" Width="31" GroupName="PkgCate" IsChecked="True" FontWeight="Normal"/>
+                <RadioButton x:Name="PkgCate_Box" Content="{DynamicResource Box}" HorizontalAlignment="Left" Margin="332,5,0,0" VerticalAlignment="Top" Height="14" Width="31" GroupName="PkgCate" FontWeight="Normal"/>
+                <Label Content="从" HorizontalAlignment="Left" Margin="1,0,0,-1" VerticalAlignment="Top"/>
+                <Label Content="到" HorizontalAlignment="Left" Margin="114,0,0,-1" VerticalAlignment="Top"/>
+                <Label Content="包装类型" HorizontalAlignment="Left" Margin="233,0,0,-1" VerticalAlignment="Top" Width="58"/>
+                <Label Content="份数" HorizontalAlignment="Left" Margin="382,0,0,-1" VerticalAlignment="Top" Width="35"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="标志:" HorizontalAlignment="Left" Margin="33,44,0,0" VerticalAlignment="Top" Height="76" Width="598" FontWeight="Bold">
+            <Grid HorizontalAlignment="Left" Height="56" Margin="0,0,-2,-2" VerticalAlignment="Top" Width="588">
+                <CheckBox x:Name="Mark3C" Content="{DynamicResource 3CMark}" HorizontalAlignment="Left" Margin="75,7,0,0" VerticalAlignment="Top" Height="15" Width="69" FontWeight="Normal"/>
+                <CheckBox x:Name="MarkRohs" Content="{DynamicResource RohsMark}" HorizontalAlignment="Left" Margin="143,7,0,0" VerticalAlignment="Top" Height="15" Width="83" FontWeight="Normal"/>
+                <CheckBox x:Name="MarkQs" Content="{DynamicResource QSMark}" HorizontalAlignment="Left" Margin="222,7,0,0" VerticalAlignment="Top" Height="15" Width="66" FontWeight="Normal"/>
+                <CheckBox x:Name="CustomMark" Content="{DynamicResource CustomMark}" HorizontalAlignment="Left" Margin="289,7,0,0" VerticalAlignment="Top" Height="15" Width="83" Checked="CustomMark_Checked" FontWeight="Normal" />
+                <TextBox x:Name="CustomMarkText" HorizontalAlignment="Left" Margin="388,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98" Height="22" IsEnabled="{Binding IsChecked, ElementName=CustomMark}" FontWeight="Normal"/>
+                <Button Content="{DynamicResource Reset}" HorizontalAlignment="Left" Margin="491,4,0,0" VerticalAlignment="Top" Width="75" IsEnabled="{Binding IsChecked, ElementName=CustomMark}" Click="Button_Click_1" Height="22" FontWeight="Normal"/>
+                <CheckBox x:Name="HideLogo" Content="去LOGO" HorizontalAlignment="Left" Margin="0,7,0,0" VerticalAlignment="Top" Height="15" Width="69" FontWeight="Normal"/>
+                <CheckBox x:Name="StandardMark" Content="企业标准（佛山）" HorizontalAlignment="Left" Margin="76,34,0,0" VerticalAlignment="Top" FontWeight="Normal"/>
+                <ComboBox x:Name="StandardCB" HorizontalAlignment="Left" Margin="197,30,0,0" VerticalAlignment="Top" Width="120" IsEnabled="{Binding IsChecked, ElementName=StandardMark}" FontWeight="Normal">
+                    <ComboBoxItem Content="Q/MBR 1-2012" IsSelected="True" IsEnabled="{Binding IsEnabled, ElementName=StandardCB}"/>
+                </ComboBox>
+                <CheckBox x:Name="drumno" Content="桶号" HorizontalAlignment="Left" Margin="0,34,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" FontWeight="Normal"/>
+            </Grid>
+        </GroupBox>
+
+
+    </Grid>
+
+</Window>

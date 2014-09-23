@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="TJITCV" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="TJITCV" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="TJITCV">
+      <s:element name="DrumNoVerify">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="networkid" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrumNoVerifyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DrumNoVerifyResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="boolean" type="s:boolean" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="DrumNoVerifySoapIn">
+    <wsdl:part name="parameters" element="tns:DrumNoVerify" />
+  </wsdl:message>
+  <wsdl:message name="DrumNoVerifySoapOut">
+    <wsdl:part name="parameters" element="tns:DrumNoVerifyResponse" />
+  </wsdl:message>
+  <wsdl:message name="DrumNoVerifyHttpGetIn">
+    <wsdl:part name="networkid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DrumNoVerifyHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="DrumNoVerifyHttpPostIn">
+    <wsdl:part name="networkid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DrumNoVerifyHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="lpiSoap">
+    <wsdl:operation name="DrumNoVerify">
+      <wsdl:input message="tns:DrumNoVerifySoapIn" />
+      <wsdl:output message="tns:DrumNoVerifySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="lpiHttpGet">
+    <wsdl:operation name="DrumNoVerify">
+      <wsdl:input message="tns:DrumNoVerifyHttpGetIn" />
+      <wsdl:output message="tns:DrumNoVerifyHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="lpiHttpPost">
+    <wsdl:operation name="DrumNoVerify">
+      <wsdl:input message="tns:DrumNoVerifyHttpPostIn" />
+      <wsdl:output message="tns:DrumNoVerifyHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="lpiSoap" type="tns:lpiSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DrumNoVerify">
+      <soap:operation soapAction="TJITCV/DrumNoVerify" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="lpiSoap12" type="tns:lpiSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DrumNoVerify">
+      <soap12:operation soapAction="TJITCV/DrumNoVerify" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="lpiHttpGet" type="tns:lpiHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="DrumNoVerify">
+      <http:operation location="/DrumNoVerify" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="lpiHttpPost" type="tns:lpiHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="DrumNoVerify">
+      <http:operation location="/DrumNoVerify" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="lpi">
+    <wsdl:port name="lpiSoap" binding="tns:lpiSoap">
+      <soap:address location="http://stjnapp03/batchmgr/verify/lpi.asmx" />
+    </wsdl:port>
+    <wsdl:port name="lpiSoap12" binding="tns:lpiSoap12">
+      <soap12:address location="http://stjnapp03/batchmgr/verify/lpi.asmx" />
+    </wsdl:port>
+    <wsdl:port name="lpiHttpGet" binding="tns:lpiHttpGet">
+      <http:address location="http://stjnapp03/batchmgr/verify/lpi.asmx" />
+    </wsdl:port>
+    <wsdl:port name="lpiHttpPost" binding="tns:lpiHttpPost">
+      <http:address location="http://stjnapp03/batchmgr/verify/lpi.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
