@@ -164,99 +164,115 @@ namespace DrumNo_WPF
                 PdfWriter writer = PdfWriter.GetInstance(document, new FileStream("Finish.pdf", FileMode.Create));
                 document.Open();
                 PdfContentByte cb = writer.DirectContent;
-                PdfImportedPage newPage;
+                
                 string pkgcate = PkgCate_Tong.Content.ToString();
                 if (!(bool)PkgCate_Tong.IsChecked)
                 {
                     pkgcate = PkgCate_Box.Content.ToString();
                 }
                 reader = GetPDF();
-                if (NOFrom.Text != "" && NOTo.Text != "")
+                if ((bool)drumno.IsChecked)
                 {
-
-                    for (int j = Convert.ToInt32(NOFrom.Text); j <= Convert.ToInt32(NOTo.Text); j++)
+                    if (NOFrom.Text != "" && NOTo.Text != "")
                     {
 
-                        for (int i = 1; i <= Convert.ToInt32(Copies.Text); i++)
+                        for (int j = Convert.ToInt32(NOFrom.Text); j <= Convert.ToInt32(NOTo.Text); j++)
                         {
 
-                            document.NewPage();
-                            newPage = writer.GetImportedPage(reader, 1);
-                            cb.AddTemplate(newPage, 0, 0);
+                            for (int i = 1; i <= Convert.ToInt32(Copies.Text); i++)
+                            {
 
-                            cb.BeginText();
-                            BaseFont bf = BaseFont.CreateFont(@"c:\windows\fonts\SIMSUN.TTC,1", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-                            cb.SetFontAndSize(bf, 14);
-                            cb.SetTextMatrix(200, 705);
-                            cb.ShowText(pkgcate+"号：" + j);
+                                HalfA4Draw(document, writer, reader, cb, pkgcate, i, j);
 
-                            cb.SetTextMatrix(200, 293);
-                            cb.ShowText(pkgcate+"号：" + (Convert.ToInt32(j) + Convert.ToInt32(0)));
-                            cb.EndText();
-                            int originX = 241;
-                            int[] originY = { 239, 649 };
-                            if ((bool)Mark3C.IsChecked)
-                            {
-                                ///3C标签
-                                iTextSharp.text.Image splitline = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\CCC.jpg");
-                                splitline.ScaleAbsolute(50, 50);
-                                splitline.SetAbsolutePosition(originX - splitline.PlainWidth, originY[0] - splitline.PlainHeight);
-                                cb.AddImage(splitline);
-                                splitline.SetAbsolutePosition(originX - splitline.PlainWidth, originY[1] - splitline.PlainHeight);
-                                cb.AddImage(splitline);
-                                //originX = originX + (int)splitline.PlainHeight;
                             }
-                            if ((bool)MarkRohs.IsChecked)
-                            {
-                                iTextSharp.text.Image rohsl = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\rohs.jpg");
-                                rohsl.ScaleAbsolute(80, 80);
-                                rohsl.SetAbsolutePosition(originX - rohsl.ScaledWidth, originY[0] - rohsl.ScaledHeight);
-                                cb.AddImage(rohsl);
-                                rohsl.SetAbsolutePosition(originX - rohsl.ScaledWidth, originY[1] - rohsl.ScaledHeight);
-                                cb.AddImage(rohsl);
-                                //originX = originX + (int)rohsl.PlainHeight;
-                            }
-                            if ((bool)MarkQs.IsChecked)
-                            {
-                                iTextSharp.text.Image qsl = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\qs.jpg");
-                                qsl.ScaleAbsolute(45, 60);
-                                qsl.SetAbsolutePosition(originX - qsl.ScaledWidth, originY[0] - qsl.ScaledHeight);
-                                cb.AddImage(qsl);
-                                qsl.SetAbsolutePosition(originX - qsl.ScaledWidth, originY[1] - qsl.ScaledHeight);
-                                cb.AddImage(qsl);
-                                //originX = originX + (int)qsl.PlainHeight;
-                            }
-                            if ((bool)HideLogo.IsChecked)
-                            {
-                                iTextSharp.text.Image bi = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\blank.png");
-                                bi.ScaleAbsolute(63, 54);
-                                bi.SetAbsolutePosition(492, 351);
-                                cb.AddImage(bi);
-                                bi.SetAbsolutePosition(492, 762);
-                                cb.AddImage(bi);
-                            }
+
+                            //j = j + 1;
 
                         }
-
-                        //j = j + 1;
-
+                        document.Close();
+                        Result.Content = Application.Current.Resources["Complete"];
+                        Process.Start("Finish.pdf");
+                        writer.Close();
                     }
+                    else
+                    {
+                        Result.Content = Application.Current.Resources["PageNOnull"].ToString();
+                        //button1.Enabled = false;
+                    }
+                }
+                else {
+                    HalfA4Draw(document, writer, reader, cb, pkgcate, 1, 1);
                     document.Close();
                     Result.Content = Application.Current.Resources["Complete"];
                     Process.Start("Finish.pdf");
                     writer.Close();
-                }
-                else
-                {
-                    Result.Content = Application.Current.Resources["PageNOnull"].ToString();
-                    //button1.Enabled = false;
                 }
             }
             catch (IOException ex) {
                 Result.Content = ex.Message;
             }
         }
-        
+        private void HalfA4Draw(Document document, PdfWriter writer, PdfReader reader, PdfContentByte cb, string pkgcate,int i,int j)
+        {
+            PdfImportedPage newPage;
+            document.NewPage();
+            newPage = writer.GetImportedPage(reader, 1);
+            cb.AddTemplate(newPage, 0, 0);
+            if ((bool)drumno.IsChecked)
+            {
+                cb.BeginText();
+                BaseFont bf = BaseFont.CreateFont(@"c:\windows\fonts\SIMSUN.TTC,1", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                cb.SetFontAndSize(bf, 14);
+                cb.SetTextMatrix(200, 705);
+                cb.ShowText(pkgcate + "号：" + j);
+
+                cb.SetTextMatrix(200, 293);
+                cb.ShowText(pkgcate + "号：" + (Convert.ToInt32(j) + Convert.ToInt32(0)));
+                cb.EndText();
+            }
+            int originX = 241;
+            int[] originY = { 239, 649 };
+            if ((bool)Mark3C.IsChecked)
+            {
+                ///3C标签
+                iTextSharp.text.Image splitline = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\CCC.jpg");
+                splitline.ScaleAbsolute(50, 50);
+                splitline.SetAbsolutePosition(originX - splitline.PlainWidth, originY[0] - splitline.PlainHeight);
+                cb.AddImage(splitline);
+                splitline.SetAbsolutePosition(originX - splitline.PlainWidth, originY[1] - splitline.PlainHeight);
+                cb.AddImage(splitline);
+                //originX = originX + (int)splitline.PlainHeight;
+            }
+            if ((bool)MarkRohs.IsChecked)
+            {
+                iTextSharp.text.Image rohsl = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\rohs.jpg");
+                rohsl.ScaleAbsolute(80, 80);
+                rohsl.SetAbsolutePosition(originX - rohsl.ScaledWidth, originY[0] - rohsl.ScaledHeight);
+                cb.AddImage(rohsl);
+                rohsl.SetAbsolutePosition(originX - rohsl.ScaledWidth, originY[1] - rohsl.ScaledHeight);
+                cb.AddImage(rohsl);
+                //originX = originX + (int)rohsl.PlainHeight;
+            }
+            if ((bool)MarkQs.IsChecked)
+            {
+                iTextSharp.text.Image qsl = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\qs.jpg");
+                qsl.ScaleAbsolute(45, 60);
+                qsl.SetAbsolutePosition(originX - qsl.ScaledWidth, originY[0] - qsl.ScaledHeight);
+                cb.AddImage(qsl);
+                qsl.SetAbsolutePosition(originX - qsl.ScaledWidth, originY[1] - qsl.ScaledHeight);
+                cb.AddImage(qsl);
+                //originX = originX + (int)qsl.PlainHeight;
+            }
+            if ((bool)HideLogo.IsChecked)
+            {
+                iTextSharp.text.Image bi = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\blank.png");
+                bi.ScaleAbsolute(63, 54);
+                bi.SetAbsolutePosition(492, 351);
+                cb.AddImage(bi);
+                bi.SetAbsolutePosition(492, 762);
+                cb.AddImage(bi);
+            }
+        }
         private void A4Label_Click(object sender, RoutedEventArgs e)
         {
             Result.Content = "";
@@ -270,139 +286,45 @@ namespace DrumNo_WPF
                 PdfWriter writer = PdfWriter.GetInstance(document, new FileStream("Finish.pdf", FileMode.Create));
                 document.Open();
                 PdfContentByte cb = writer.DirectContent;
-                PdfImportedPage newPage;
+                
                 
                 string pkgcate = PkgCate_Tong.Content.ToString();
                 if (!(bool)PkgCate_Tong.IsChecked) {
                     pkgcate = PkgCate_Box.Content.ToString();
                 }
                 reader = GetPDF();
-
-                if (NOFrom.Text != "" && NOTo.Text != "")
+                if ((bool)drumno.IsChecked)
                 {
-
-                    for (int j = Convert.ToInt32(NOFrom.Text); j <= Convert.ToInt32(NOTo.Text); j++)
+                    if (NOFrom.Text != "" && NOTo.Text != "")
                     {
 
-                        for (int i = 1; i <= Convert.ToInt32(Copies.Text); i++)
+                        for (int j = Convert.ToInt32(NOFrom.Text); j <= Convert.ToInt32(NOTo.Text); j++)
                         {
-                            document.NewPage();
-                            //PdfStamper stamp = new PdfStamper(reader, new FileStream("Finish.pdf", FileMode.Create));
-                            newPage = writer.GetImportedPage(reader, 1);
-                            if (newPage.Height > newPage.Width)
-                            {
-                                cb.AddTemplate(newPage, 0, 0);
-                            }
-                            else
-                            {
-                                cb.AddTemplate(newPage, 0, 1, -1, 0, newPage.Height, 0);
-                            }
-                            cb.BeginText();
 
-                            cb.SetFontAndSize(bf, 14);
-                            cb.SetTextMatrix(0, 1, -1, 0, 193, 270);
-                            //cb.ShowText("桶号：" + j + " " + "to " + Convert.ToInt32(textBox2.Text));
-                            cb.ShowText(pkgcate+"号：" + j);
-                            cb.EndText();
-                            int originX = int.Parse(AsixX.Text), originY = int.Parse(AsixY.Text);
-                            int MaxX = int.Parse(this.Resources["A4MaxX"].ToString());
-                            int MinY = int.Parse(this.Resources["A4MinY"].ToString());
-                            List<int> ActualX=new List<int>();
-                            List<int> ActualY=new List<int>();
-                            if ((bool)CustomMark.IsChecked)
+                            for (int i = 1; i <= Convert.ToInt32(Copies.Text); i++)
                             {
-                                //自定义文本标签外间距，内间距，尺寸
-                                int x = 0, y = 0, tmx = 4, tmy = 10, w = 80, h = 45;
-                                if (CustomMarkText.Text.Length < 2) {
-                                    w = w / 2;
-                                }
-                                PdfTemplate cut = cb.CreateTemplate(w, h);
-                                cut.MoveTo(x, y);
-                                cut.LineTo(w - x, 0 + y);
-                                cut.LineTo(w - x, h - y);
-                                cut.LineTo(x, h - y);
-                                cut.LineTo(x, y);
-                                cut.Stroke();
-                                cut.BeginText();
-                                cut.SetFontAndSize(lf, 36);
+                                A4Draw(document, writer, reader, cb, pkgcate, i, j);
+                            }
 
-                                cut.SetTextMatrix(tmx, tmy);
-
-                                cut.ShowTextAligned(1, CustomMarkText.Text, w / 2, 10, 0);
-                                //cut.ShowText(culabeltext.Text);
-                                cut.EndText();
-                                float zoom = float.Parse(Zoom.Text)/100;
-                                cb.AddTemplate(cut, 0, 1*zoom, -1*zoom, 0, originX + h * 1*zoom, originY - cut.Width * 1*zoom);
-                                ActualX.Add((int)(cut.Height * zoom)+1);
-                                ActualY.Add((int)(cut.Width * zoom)+2);
-                                originX += (int)(cut.Height * zoom)+1;
-                                
-                            }
-                            if ((bool)Mark3C.IsChecked)
-                            {
-                                ///3C标签
-                                iTextSharp.text.Image splitline = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\CCC.jpg");
-                                splitline.RotationDegrees = 90;
-                                splitline.ScaleAbsolute(50, 50);
-                                if (originX + splitline.PlainWidth > MaxX) {
-                                    originX = int.Parse(AsixX.Text);
-                                    originY -= ActualY.Max();                                    
-                                }
-                                ActualX.Add((int)splitline.PlainHeight + 1);
-                                ActualY.Add((int)splitline.PlainWidth + 1);
-                                splitline.SetAbsolutePosition(originX, originY - splitline.PlainWidth);
-                                cb.AddImage(splitline);
-                                //document.Add(splitline);
-                                originX = originX + (int)splitline.PlainHeight;
-                            }
-                            if ((bool)MarkRohs.IsChecked)
-                            {
-                                iTextSharp.text.Image rohsl = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\rohs.jpg");
-                                rohsl.RotationDegrees = 90;
-                                rohsl.ScaleAbsolute(100, 100);
-                                if (originX + rohsl.PlainWidth > MaxX)
-                                {
-                                    originX = int.Parse(AsixX.Text);
-                                    originY -= ActualY.Max();
-                                }
-                                ActualX.Add((int)rohsl.PlainHeight + 1);
-                                ActualX.Add((int)rohsl.PlainWidth + 1);
-                                rohsl.SetAbsolutePosition(originX, originY - rohsl.PlainWidth);
-                                cb.AddImage(rohsl);
-                                //document.Add(rohsl);
-                                originX = originX + (int)rohsl.PlainHeight;
-                            }
-                            if ((bool)MarkQs.IsChecked)
-                            {
-                                iTextSharp.text.Image qsl = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\qs.jpg");
-                                qsl.RotationDegrees = 90;
-                                qsl.ScaleAbsolute(45, 60);
-                                if (originX + qsl.PlainWidth > MaxX)
-                                {
-                                    originX = int.Parse(AsixX.Text);
-                                    originY -= ActualY.Max();
-                                }
-                                ActualX.Add((int)qsl.PlainHeight + 1);
-                                ActualY.Add((int)qsl.PlainWidth + 1);
-                                qsl.SetAbsolutePosition(originX, originY - qsl.PlainWidth);
-                                cb.AddImage(qsl);
-                                //document.Add(qsl);
-                                originX = originX + (int)qsl.PlainHeight;
-                            }
-                            
                         }
 
+                        document.Close();
+                        Result.Content = Application.Current.Resources["Complete"];
+                        Process.Start("Finish.pdf");
+                        writer.Close();
+
                     }
-                    
+                    else
+                    {
+                        Result.Content = Application.Current.Resources["PageNOnull"].ToString();
+                    }
+                }
+                else {
+                    A4Draw(document, writer, reader, cb, pkgcate, 1, 1);
                     document.Close();
                     Result.Content = Application.Current.Resources["Complete"];
                     Process.Start("Finish.pdf");
                     writer.Close();
-
-                }
-                else
-                {
-                    Result.Content = Application.Current.Resources["PageNOnull"].ToString();
                 }
             }
             catch (IOException ex)
@@ -410,7 +332,134 @@ namespace DrumNo_WPF
                 Result.Content = ex.Message;
             }
         }
+        private void A4Draw(Document document, PdfWriter writer, PdfReader reader, PdfContentByte cb, string pkgcate, int i, int j)
+        {
+            PdfImportedPage newPage;
+            document.NewPage();
+            //PdfStamper stamp = new PdfStamper(reader, new FileStream("Finish.pdf", FileMode.Create));
+            newPage = writer.GetImportedPage(reader, 1);
+            if (newPage.Height > newPage.Width)
+            {
+                cb.AddTemplate(newPage, 0, 0);
+            }
+            else
+            {
+                cb.AddTemplate(newPage, 0, 1, -1, 0, newPage.Height, 0);
+            }
+            cb.BeginText();
 
+            cb.SetFontAndSize(bf, 14);
+            cb.SetTextMatrix(0, 1, -1, 0, 193, 270);
+            //cb.ShowText("桶号：" + j + " " + "to " + Convert.ToInt32(textBox2.Text));
+            cb.ShowText(pkgcate + "号：" + j);
+            cb.EndText();
+            int originX = int.Parse(AsixX.Text), originY = int.Parse(AsixY.Text);
+            int MaxX = int.Parse(this.Resources["A4MaxX"].ToString());
+            int MinY = int.Parse(this.Resources["A4MinY"].ToString());
+            List<int> ActualX = new List<int>();
+            List<int> ActualY = new List<int>();
+            if ((bool)CustomMark.IsChecked)
+            {
+                //自定义文本标签外间距，内间距，尺寸
+                int x = 0, y = 0, tmx = 8, tmy = 20, w = 170, h = 80;
+                if (CustomMarkText.Text.Length < 2)
+                {
+                    w = w / 2;
+                }
+                PdfTemplate cut = cb.CreateTemplate(w, h);
+                //cut.MoveTo(x, y);
+                //cut.LineTo(w - x, 0 + y);
+                //cut.LineTo(w - x, h - y);
+                //cut.LineTo(x, h - y);
+                //cut.LineTo(x, y);
+                //cut.Stroke();
+                cut.BeginText();
+                cut.SetFontAndSize(bf, 90);
+
+                cut.SetTextMatrix(tmx, tmy);
+
+                cut.ShowTextAligned(1, CustomMarkText.Text, w / 2, 10, 0);
+                //cut.ShowText(culabeltext.Text);
+                cut.EndText();
+                float zoom = float.Parse(Zoom.Text) / 100;
+                cb.AddTemplate(cut, 0, 1 * zoom, -1 * zoom, 0, originX + h * 1 * zoom, originY - cut.Width * 1 * zoom);
+                ActualX.Add((int)(cut.Height * zoom) + 1);
+                ActualY.Add((int)(cut.Width * zoom) + 2);
+                originX += (int)(cut.Height * zoom) + 1;
+
+            }
+            if ((bool)StandardMark.IsChecked)
+            {
+                int tmx = 4, tmy = 10, w = 170, h=30;
+                PdfTemplate cut = cb.CreateTemplate(w, h);
+                cut.BeginText();
+                cut.SetFontAndSize(bf, 15);
+                cut.SetTextMatrix(tmx, tmy);
+                cut.ShowTextAligned(1, "企业标准："+StandardCB.Text, w / 2, 10, 0);
+                cut.EndText();
+                cb.AddTemplate(cut, 0, 1, -1, 0, 500, 40);
+            }
+            if ((bool)Mark3C.IsChecked)
+            {
+                ///3C标签
+                iTextSharp.text.Image splitline = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\CCC.jpg");
+                splitline.RotationDegrees = 90;
+                splitline.ScaleAbsolute(50, 50);
+                if (originX + splitline.PlainWidth > MaxX)
+                {
+                    originX = int.Parse(AsixX.Text);
+                    originY -= ActualY.Max();
+                }
+                ActualX.Add((int)splitline.PlainHeight + 1);
+                ActualY.Add((int)splitline.PlainWidth + 1);
+                splitline.SetAbsolutePosition(originX, originY - splitline.PlainWidth);
+                cb.AddImage(splitline);
+                //document.Add(splitline);
+                originX = originX + (int)splitline.PlainHeight;
+            }
+            if ((bool)MarkRohs.IsChecked)
+            {
+                iTextSharp.text.Image rohsl = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\rohs.jpg");
+                rohsl.RotationDegrees = 90;
+                rohsl.ScaleAbsolute(100, 100);
+                if (originX + rohsl.PlainWidth > MaxX)
+                {
+                    originX = int.Parse(AsixX.Text);
+                    originY -= ActualY.Max();
+                }
+                ActualX.Add((int)rohsl.PlainHeight + 1);
+                ActualX.Add((int)rohsl.PlainWidth + 1);
+                rohsl.SetAbsolutePosition(originX, originY - rohsl.PlainWidth);
+                cb.AddImage(rohsl);
+                //document.Add(rohsl);
+                originX = originX + (int)rohsl.PlainHeight;
+            }
+            if ((bool)MarkQs.IsChecked)
+            {
+                iTextSharp.text.Image qsl = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\qs.jpg");
+                qsl.RotationDegrees = 90;
+                qsl.ScaleAbsolute(45, 60);
+                if (originX + qsl.PlainWidth > MaxX)
+                {
+                    originX = int.Parse(AsixX.Text);
+                    originY -= ActualY.Max();
+                }
+                ActualX.Add((int)qsl.PlainHeight + 1);
+                ActualY.Add((int)qsl.PlainWidth + 1);
+                qsl.SetAbsolutePosition(originX, originY - qsl.PlainWidth);
+                cb.AddImage(qsl);
+                //document.Add(qsl);
+                originX = originX + (int)qsl.PlainHeight;
+            }
+            if ((bool)HideLogo.IsChecked)
+            {
+                iTextSharp.text.Image bi = iTextSharp.text.Image.GetInstance(Environment.CurrentDirectory + "\\blank.png");
+                bi.ScaleAbsolute(57, 76);
+                bi.SetAbsolutePosition(26, 656);
+                cb.AddImage(bi);
+            }
+            
+        }
         private void CustomMark_Checked(object sender, RoutedEventArgs e)
         {
 

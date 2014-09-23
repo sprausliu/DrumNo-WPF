@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DrumNo-WPF.exe" size="35840">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DrumNo-WPF.exe" size="36352">
       <assemblyIdentity name="DrumNo-WPF" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>kBS2FQ3vwvDcgPez7a1W5JHF7+wkStPpxxfaA2L6cq8=</dsig:DigestValue>
+        <dsig:DigestValue>7e+GEACOOHDjCdqfHcoysbz6tuX9xsctv9q0oCFCC5g=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

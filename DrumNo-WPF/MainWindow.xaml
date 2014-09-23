@@ -4,8 +4,8 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="DrumNo_WPF.MainWindow"
         Title="{DynamicResource DrumNo}" Height="400" Width="667" ResizeMode="NoResize">
     <Window.Resources>
-        <System:Double x:Key="A4OriginX">282</System:Double>
-        <System:Double x:Key="A4OriginY">434</System:Double>
+        <System:Double x:Key="A4OriginX">450</System:Double>
+        <System:Double x:Key="A4OriginY">440</System:Double>
         <System:Double x:Key="A4OriginZoom">70</System:Double>
         <System:Double x:Key="A4OriginRotate">0</System:Double>
         <System:Int16 x:Key="A4MaxX">449</System:Int16>
