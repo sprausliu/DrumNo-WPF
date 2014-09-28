@@ -272,6 +272,24 @@ namespace DrumNo_WPF
                 bi.SetAbsolutePosition(492, 762);
                 cb.AddImage(bi);
             }
+            if ((bool)CustomMark.IsChecked)
+            {
+                int tmx = 8, tmy = 20, w = 170, h = 80;
+                if (CustomMarkText.Text.Length < 2)
+                {
+                    w = w / 2;
+                }
+                PdfTemplate cut = cb.CreateTemplate(w, h);
+                cut.BeginText();
+                cut.SetFontAndSize(bf, 55);
+
+                cut.SetTextMatrix(tmx, tmy);
+
+                cut.ShowTextAligned(1, CustomMarkText.Text, w / 2, 10, 0);
+                cut.EndText();
+                cb.AddTemplate(cut, 1,0,0,1, 180, 60);
+                cb.AddTemplate(cut, 1, 0, 0, 1, 180, 471);
+            }
         }
         private void A4Label_Click(object sender, RoutedEventArgs e)
         {
