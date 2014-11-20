@@ -364,13 +364,16 @@ namespace DrumNo_WPF
             {
                 cb.AddTemplate(newPage, 0, 1, -1, 0, newPage.Height, 0);
             }
-            cb.BeginText();
+            if ((bool)drumno.IsChecked)
+            {
+                cb.BeginText();
 
-            cb.SetFontAndSize(bf, 14);
-            cb.SetTextMatrix(0, 1, -1, 0, 193, 270);
-            //cb.ShowText("桶号：" + j + " " + "to " + Convert.ToInt32(textBox2.Text));
-            cb.ShowText(pkgcate + "号：" + j);
-            cb.EndText();
+                cb.SetFontAndSize(bf, 14);
+                cb.SetTextMatrix(0, 1, -1, 0, 193, 270);
+                //cb.ShowText("桶号：" + j + " " + "to " + Convert.ToInt32(textBox2.Text));
+                cb.ShowText(pkgcate + "号：" + j);
+                cb.EndText();
+            }            
             int originX = int.Parse(AsixX.Text), originY = int.Parse(AsixY.Text);
             int MaxX = int.Parse(this.Resources["A4MaxX"].ToString());
             int MinY = int.Parse(this.Resources["A4MinY"].ToString());

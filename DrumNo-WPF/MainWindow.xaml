@@ -79,7 +79,7 @@
                 <ComboBox x:Name="StandardCB" HorizontalAlignment="Left" Margin="197,30,0,0" VerticalAlignment="Top" Width="120" IsEnabled="{Binding IsChecked, ElementName=StandardMark}" FontWeight="Normal">
                     <ComboBoxItem Content="Q/MBR 1-2012" IsSelected="True" IsEnabled="{Binding IsEnabled, ElementName=StandardCB}"/>
                 </ComboBox>
-                <CheckBox x:Name="drumno" Content="桶号" HorizontalAlignment="Left" Margin="0,34,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" FontWeight="Normal"/>
+                <CheckBox x:Name="drumno" Content="桶号" HorizontalAlignment="Left" Margin="0,34,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" FontWeight="Normal" IsChecked="True"/>
             </Grid>
         </GroupBox>
 
