@@ -1,0 +1,36 @@
+﻿<xml>
+  <A4>
+    <DrumNo>
+      <x>333</x>
+      <y>270</y>
+    </DrumNo>
+  </A4>
+  <HalfA4>
+    <DrumNo>
+      <x>200</x>
+      <y>705</y>
+    </DrumNo>
+    <DrumNo>
+      <x>200</x>
+      <y>293</y>
+    </DrumNo>
+  </HalfA4>
+  <QuarterA4>
+    <DrumNo>
+      <x>220</x>
+      <y>758</y>
+    </DrumNo>
+    <DrumNo>
+      <x>220</x>
+      <y>559</y>
+    </DrumNo>
+    <DrumNo>
+      <x>220</x>
+      <y>360</y>
+    </DrumNo>
+    <DrumNo>
+      <x>220</x>
+      <y>163</y>
+    </DrumNo>
+  </QuarterA4>
+</xml>

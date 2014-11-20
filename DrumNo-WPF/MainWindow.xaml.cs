@@ -18,6 +18,7 @@ using iTextSharp.text;
 using System.IO;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.Xml;
 
 namespace DrumNo_WPF
 {
@@ -155,7 +156,7 @@ namespace DrumNo_WPF
         }
         private void HalfA4Label_Click(object sender, RoutedEventArgs e)
         {
-            Result.Content = "";
+            Result.Content = "正在生成标签...";
             try
             {
                 PdfReader reader;
@@ -223,10 +224,10 @@ namespace DrumNo_WPF
                 cb.BeginText();
                 BaseFont bf = BaseFont.CreateFont(@"c:\windows\fonts\SIMSUN.TTC,1", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
                 cb.SetFontAndSize(bf, 14);
-                cb.SetTextMatrix(200, 705);
+                List<MarkLocation> axis = DrumAxisList("HalfA4");
+                cb.SetTextMatrix(axis[0].AsixX, axis[0].AsixY);
                 cb.ShowText(pkgcate + "号：" + j);
-
-                cb.SetTextMatrix(200, 293);
+                cb.SetTextMatrix(axis[1].AsixX, axis[1].AsixY);
                 cb.ShowText(pkgcate + "号：" + (Convert.ToInt32(j) + Convert.ToInt32(0)));
                 cb.EndText();
             }
@@ -293,7 +294,7 @@ namespace DrumNo_WPF
         }
         private void A4Label_Click(object sender, RoutedEventArgs e)
         {
-            Result.Content = "";
+            Result.Content = "正在生成标签...";
             try
             {
                 PdfReader reader;
@@ -365,9 +366,10 @@ namespace DrumNo_WPF
                 cb.AddTemplate(newPage, 0, 1, -1, 0, newPage.Height, 0);
             }
             cb.BeginText();
-
+            MarkLocation axis = DrumAxis("A4", 0);
             cb.SetFontAndSize(bf, 14);
-            cb.SetTextMatrix(0, 1, -1, 0, 193, 270);
+            cb.SetTextMatrix(0, 1, -1, 0, axis.AsixX, axis.AsixY);
+            
             //cb.ShowText("桶号：" + j + " " + "to " + Convert.ToInt32(textBox2.Text));
             cb.ShowText(pkgcate + "号：" + j);
             cb.EndText();
@@ -493,7 +495,7 @@ namespace DrumNo_WPF
 
         private void QuarterA4Label_Click(object sender, RoutedEventArgs e)
         {
-            Result.Content = "";
+            Result.Content = "正在生成标签...";
             try
             {
                 PdfReader reader;
@@ -527,16 +529,17 @@ namespace DrumNo_WPF
                             cb.BeginText();
                             BaseFont bf = BaseFont.CreateFont(@"c:\windows\fonts\SIMSUN.TTC,1", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
                             cb.SetFontAndSize(bf, 10);
-                            cb.SetTextMatrix(220, 758);
+                            List<MarkLocation> axis = DrumAxisList("HalfA4");
+                            cb.SetTextMatrix(axis[0].AsixX,axis[0].AsixY);
                             cb.ShowText(pkgcate + "号：" + j);
 
-                            cb.SetTextMatrix(220, 559);
+                            cb.SetTextMatrix(axis[1].AsixX, axis[1].AsixY);
                             cb.ShowText(pkgcate + "号：" + (Convert.ToInt32(j) + Convert.ToInt32(0)));
 
-                            cb.SetTextMatrix(220, 360);
+                            cb.SetTextMatrix(axis[2].AsixX, axis[2].AsixY);
                             cb.ShowText(pkgcate + "号：" + (Convert.ToInt32(j) + Convert.ToInt32(1)));
 
-                            cb.SetTextMatrix(220, 163);
+                            cb.SetTextMatrix(axis[3].AsixX, axis[3].AsixY);
                             cb.ShowText(pkgcate + "号：" + (Convert.ToInt32(j) + Convert.ToInt32(1)));
 
                             cb.EndText();
@@ -566,9 +569,56 @@ namespace DrumNo_WPF
 
         }
 
-
-
+        private XmlDocument TemplateXML()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load("Template/default_tmp.xml");
+            return doc;
+        }
+        private List<MarkLocation> DrumAxisList(string size)
+        {
+            XmlDocument doc = TemplateXML();
+            XmlElement template = doc.DocumentElement;            
+            try
+            {
+                XmlNodeList das = template.SelectSingleNode(size).SelectNodes("DrumNo");
+                List<MarkLocation> mll = new List<MarkLocation>();
+                foreach (XmlNode i in das)
+                {
+                    mll.Add(new MarkLocation { 
+                        AsixX = int.Parse(i.SelectSingleNode("x").InnerText), 
+                        AsixY = int.Parse(i.SelectSingleNode("y").InnerText) 
+                    });
+                }
+                return mll;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        private MarkLocation DrumAxis(string size, int index)
+        {
+            XmlDocument doc = TemplateXML();
+            XmlElement template = doc.DocumentElement;
+            XmlNodeList das=template.SelectSingleNode(size).SelectNodes("DrumNo");
+            XmlNode da=das[index];
+            try
+            {
+                return new MarkLocation
+                {
+                    AsixX = int.Parse(da.SelectSingleNode("x").InnerText),
+                    AsixY = int.Parse(da.SelectSingleNode("y").InnerText)
+                };
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
+        }
     }
+
+
     public class MarkLocation{
         public int AsixX;
         public int AsixY;

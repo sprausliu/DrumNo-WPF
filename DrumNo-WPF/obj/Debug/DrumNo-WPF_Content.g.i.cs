@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("web%20references/tjit/lpi.disco")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/default_tmp.xml")]
 
 
