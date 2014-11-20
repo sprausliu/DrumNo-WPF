@@ -17,4 +17,3 @@ E:\develop\DrumNo-WPF\DrumNo-WPF\obj\Debug\DrumNo-WPF.exe.manifest
 E:\develop\DrumNo-WPF\DrumNo-WPF\obj\Debug\DrumNo-WPF.application
 E:\develop\DrumNo-WPF\DrumNo-WPF\obj\Debug\DrumNo-WPF.exe
 E:\develop\DrumNo-WPF\DrumNo-WPF\obj\Debug\DrumNo-WPF.pdb
-E:\develop\DrumNo-WPF\DrumNo-WPF\obj\Debug\DrumNo-WPF.csprojResolveAssemblyReference.cache
